@@ -25,7 +25,9 @@ const News = (props) => {
   const meta = CATEGORY_META[props.category] || CATEGORY_META.general;
 
   const buildUrl = (p) =>
-    `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${p}&pageSize=${props.pageSize}`;
+    process.env.NODE_ENV === 'production'
+      ? `/api/news?country=${props.country}&category=${props.category}&page=${p}&pageSize=${props.pageSize}`
+      : `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${p}&pageSize=${props.pageSize}`;
 
   const updateNews = useCallback(async () => {
     if (!props.apiKey) {
